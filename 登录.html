@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>登录</title>
+<style>
+body{
+display: flex;
+justify-content: center;
+align-items: center;
+background: #f5f5f5;
+margin:0;
+height: 100vh;
+	}
+form{
+background: #333;
+width: 350px;
+min-height: 400px;
+color: #eee;
+margin: 0 auto;
+border-radius: 20px;
+	}
+h1{
+text-align: center;
+		}
+.e{
+display: flex;
+flex-direction:column;
+justify-content: center;
+align-items: center;
+color: #ffffff;
+gap: 30px;
+	}
+.fgx{
+border-bottom: 2px solid #ffffff;
+margin: 12px;
+	}
+a{
+display: flex;
+text-decoration:none;
+color: blue;
+}
+.k{
+display: flex;
+font-size: 12px;
+gap: 10px;
+margin: 10px;
+	}
+.l{
+display: flex;
+justify-content: center;
+align-items: center;
+	}	
+button{
+border: 2px solid green;
+	}
+@media (max-width: 768px){
+form{
+width: 100%;}
+}
+p{
+text-align: center;
+	}
+
+</style>
+</head>
+<body>
+<form id="loginForm">
+<h1>棍母小站登录</h1>
+<div class="e">
+<label for="q">用户名:</label>
+<input type="text" id="q" placeholder="请输入">
+<label for="r">密码:</label>
+<input type="password" id="r" placeholder="请输入">
+</div>
+<div class="fgx"></div>
+<div class="k">
+<input type="checkbox" id="agree">
+<label>本人同意隐私协议与用户协议</label>
+<a href="协议.html">隐私协议与用户协议</a>
+</div>
+<p id="tip" style="min-height:18px;font-size:13px;color:#ff6b6b;margin:0;"></p>
+<div class="l">
+<button type="button" id="btnLogin">确认</button>
+</div>
+<p>如果您忘记密码，在这里<a href="#" id="resetLink" style="display:inline;color:#4ea1ff">重新注册</a>就行了</p>
+</form>
+<script>
+(function () {
+  var KEY       = 'gm_user';
+  var LOGIN_KEY = 'gm_logged';
+
+  var userInput = document.getElementById('q');
+  var pwdInput  = document.getElementById('r');
+  var agree     = document.getElementById('agree');
+  var tip       = document.getElementById('tip');
+
+  function getSaved() {
+	try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; }
+  }
+  function setTip(msg, color) {
+	tip.textContent = msg;
+	tip.style.color = color || '#ff6b6b';
+  }
+  var saved = getSaved();
+  if (saved && saved.u) {
+	userInput.value = saved.u;
+	pwdInput.value  = saved.p;
+	setTip('已自动填入本机上次登录的账号，可直接点击“确认”', '#8bc34a');
+  }
+ document.getElementById('btnLogin').onclick = function () {
+var u = userInput.value.trim();
+var p = pwdInput.value.trim();
+
+if (!u) { setTip('请输入用户名'); userInput.focus(); return; }
+if (!p) { setTip('请输入密码');  pwdInput.focus();  return; }
+if (!agree.checked) { setTip('请先勾选“本人同意隐私协议与用户协议”'); return; }
+
+var now = getSaved();
+if (now && (now.u !== u || now.p !== p)) {
+  setTip('用户名或密码与本机记录的账号不一致，请重新输入（忘记可点下方“重新注册”）');
+  return;
+}
+
+try {
+  localStorage.setItem(KEY, JSON.stringify({ u: u, p: p, time: Date.now() }));
+  localStorage.setItem(LOGIN_KEY, 'ok');
+  localStorage.setItem('gm_login_time', String(Date.now()));
+} catch (e) {
+  setTip('本机存储不可用，请检查是否关闭了浏览器存储权限');
+  return;
+}
+
+setTip('登录成功，正在进入...', '#8bc34a');
+location.href = '棍母小站.html';
+ };
+  document.getElementById('resetLink').onclick = function (e) {
+	e.preventDefault();
+	localStorage.removeItem(KEY);
+	localStorage.removeItem(LOGIN_KEY);
+	localStorage.removeItem('gm_login_time');
+	userInput.value = '';
+	pwdInput.value  = '';
+	agree.checked   = false;
+	setTip('已清空本机记录，请重新填写注册', '#8bc34a');
+  };
+})();
+</script>
+</body>
+</html>

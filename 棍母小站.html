@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>棍母小站</title>
+  <script>
+(function () {
+  var LOGIN_KEY = 'gm_logged';       
+  var TIME_KEY  = 'gm_login_time';   
+  var MAX_AGE   = 2 * 60 * 60 * 1000; 
+  function isLogged() {
+	try {
+	  if (localStorage.getItem(LOGIN_KEY) !== 'ok') return false;
+	  var t = localStorage.getItem(TIME_KEY);
+	  if (!t) return false;
+	  if (Date.now() - Number(t) > MAX_AGE) return false;
+	  return true;
+	} catch (e) {
+	  return false;
+	}
+  }
+  if (!isLogged()) {
+	location.replace('登录.html');
+  }
+})();
+</script>
+  <style>
+  *{box-sizing: border-box;
+	margin: 0; 
+  }
+  body{
+	  background: #0000004d;
+  }
+  .a{
+	display: flex;
+	background: black;  
+	width: 360px;
+	color:white ;
+	justify-content: space-between;
+	align-items: center; 
+	margin: 3px;
+	gap: 178px;
+  }
+  .导{
+	 display: flex; 
+	 gap: 12px;
+  }
+  .eb{
+	  gap: 70px;
+  }
+  .e{
+	  display: flex;
+	  width:100vw;
+	  height: 180px;
+	 background: #ffffff;
+	 border-radius: 15px;
+  }
+.btu{
+	display: flex;
+ 	background: green;
+	 width: 10px;
+	 justify-content: space-around;
+	 align-items: center;
+	 margin: 10px;
+	 border-radius: 5px;
+	 flex:1;
+	}
+.b{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  min-height: 100vh;
+  background: pink;
+  border-radius: 15px;
+}
+.b > h2{
+  width: 100%;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.card{
+  width: 220px;
+  max-width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0002;
+  transition: transform .2s, box-shadow .2s;
+}
+.card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px #0003;
+}
+.card .pic{
+  width: 100%;
+  height: 140px;
+  background: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+  font-size: 13px;
+  overflow: hidden;
+}
+.card .pic img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card .txt{
+  padding: 10px 12px 14px;
+}
+.card .txt h3{
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+.card .txt p{
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+.mask{
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000000a6;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 99;
+}
+.mask.on{
+  display: flex;
+}
+.detail{
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 15px;
+  padding: 16px 20px 24px;
+}
+.detail .d-pic{
+  width: 100%;
+  height: 200px;
+  background: #ddd;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+  font-size: 13px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.detail .d-pic img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.detail h3{
+  margin: 0 0 10px;
+}
+#dClose{
+  float: right;
+  border: none;
+  background: #eee;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+footer{
+background: #333;
+color: #eee;
+text-align: center;
+	}
+  </style>
+</head>
+<body>
+<nav class="a">
+<u1>棍母小站</u1>
+<div class="导">
+<a href="登录.html" style="color:white">登录</a>
+<a href="#" id="logout" style="color:white">退出登录</a>
+<a href="协议.html"style="color:white">关于协议</a>
+</div>
+</nav>
+<div class="eb">
+<div class="e">
+<h1>棍母</h1>
+<div class="btu">
+<a href="关于.html">关于棍母小站</a>
+</div>
+</div>
+<div class="b">
+  <h2>棍母事物</h2>
+
+  <!-- 1 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>人人网（校内网）</h3>
+	  <p>曾拥有1.7亿用户，靠“偷菜”火遍全国</p>
+	</div>
+	<div class="full" hidden>
+	  <p>前身为王兴2005年创办的校内网，2009年更名人人网，聚焦校园市场，2010年底注册人数高达1.7亿。2008年“开心农场”上线后，“偷菜”游戏风靡全国，玩家最多时超过1亿人。2011年在纽交所上市，首日市值达74.82亿美元。[reference:0]</p>
+	  <p>2013年起持续亏损，多次转型失败，2018年社交网络全部资产被出售，APP下架。目前人人网已无法登录，只剩一条服务升级公告。</p>
+	</div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>天涯社区</h3>
+	  <p>1999年创建，中文互联网最早的“网上家园”</p>
+	</div>
+	<div class="full" hidden>
+	  <p>创建于1999年，用户覆盖60后至部分90后，曾是网民交流分享信息的重要平台，承载了一代网民的青春记忆。</p>
+	  <p>2024年2月，天涯社区网络科技股份有限公司被申请破产审查，官网至今无法打开。</p>
+	</div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>雅虎地球村（GeoCities）</h3>
+	  <p>免费个人网页时代的标志，2009年关闭</p>
+	</div>
+	<div class="full" hidden>
+	  <p>1994年创立，是早期网络托管服务之一，让无数普通人第一次拥有了自己的个人主页。2009年6月雅虎宣布关闭服务，同年10月26日正式关闭，所有未备份数据被彻底删除。</p>
+	  <p>它的关闭标志着免费个人网页时代的终结。</p>
+	</div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>西祠胡同</h3>
+	  <p>曾拥有近3000万注册用户的老牌BBS</p>
+	</div>
+	<div class="full" hidden>
+	  <p>华语地区老牌综合社区，拥有近3000万注册用户。2021年4月被勒令下线，2022年5月以1元价格挂牌转让500万股股份，此后逐步关闭。发帖功能于2021年9月暂停，官网长期无法正常访问。</p>
+	  <p>直到2026年6月才官宣回归，停摆长达五年。</p>
+	</div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>鲤鱼Ace早期视频（2015-2017）</h3>
+	  <p>千万粉丝博主被删除的早期作品</p>
+	</div>
+	<div class="full" hidden>
+	  <p>千万粉丝博主鲤鱼Ace于2015年到2017年被删除的一系列视频，涵盖游戏、生活等内容，包括“鬼畜天线宝宝”“血染小镇”“小偷模拟器”“克隆机器人大乱斗”等多个系列。</p>
+	  <p>失传原因包括儿童邪典、血腥暴力、净网行动等。其中“鬼畜天线宝宝”系列因儿童邪典被删除，“血染小镇”系列推测因血腥暴力下架。</p>
+	  <p>部分视频已被“失传媒体中文维基”记录，但大量内容至今无法找回。</p>
+	</div>
+  </div>
+
+  <!-- 6 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>《谭谈交通》</h3>
+	  <p>全网下架，主持人面临千万索赔</p>
+	</div>
+	<div class="full" hidden>
+	  <p>以诙谐幽默为特点的交通警示类节目，2022年被突然下架。主持人谭乔发布微博称，自己可能面临千万元索赔甚至牢狱之灾。</p>
+	  <p>微博话题“谭谈交通全面下架”“谭乔自曝或面临牢狱之灾”阅读量均达数亿次，引发全网关注。</p>
+	</div>
+  </div>
+
+  <!-- 7 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>“网红小胖”钱志君</h3>
+	  <p>初代网红，2003年一张照片火遍全网</p>
+	</div>
+	<div class="full" hidden>
+	  <p>2003年，一张身穿学生装、回头的“王之蔑视”照片被传到论坛后瞬间火爆，掀起全民P图热潮，从蒙娜丽莎到怪物史莱克都被P了个遍，被称为“网络恶搞第一人”。</p>
+	  <p>他后来进过娱乐圈，演过《爱情公寓》等剧中的小角色，也在上海开过咖啡店，经营六年。截至2024年12月，他的社交账号已停止更新，逐渐淡出大众视野。</p>
+	</div>
+  </div>
+
+  <!-- 8 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>原央视主持人阿丘</h3>
+	  <p>曾家喻户晓，被央视除名后无人识</p>
+	</div>
+	<div class="full" hidden>
+	  <p>曾因言论引发争议，被央视除名。2022年尝试开抖音号拍风景，反响平平；又尝试直播带货，直播间涌入的观众全是来骂的，最终直播间被封禁。</p>
+	  <p>2026年4月，有人在汕头老城区路边粥摊拍到消失很久的阿丘，他一个人低头喝粥，周围没人认出这张曾经家喻户晓的脸。</p>
+	</div>
+  </div>
+
+  <!-- 9 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>鬼脸嘟嘟饼干</h3>
+	  <p>挤一下眼睛会“爆出来”的夹心饼干</p>
+	</div>
+	<div class="full" hidden>
+	  <p>夹心饼干，饼干表面印有鬼脸图案，用力一挤“眼睛会爆出来”，趣味性远超普通饼干。花生味和巧克力味最受欢迎，被视为“童年甜品天花板”。</p>
+	  <p>产品线被砍掉后，原版不再生产。有网友评价市面上虽有一些口感相近的替代品，但“原版的味道再也找不回来了”。</p>
+	</div>
+  </div>
+
+  <!-- 10 -->
+  <div class="card">
+	<div class="pic"><img src="https://p0.ssl.qhimgs4.com/t01a572b0e73bf41820.jpg" alt="宝"></div>
+	<div class="txt">
+	  <h3>宝塔糖</h3>
+	  <p>花花绿绿的“糖”，1985年后消失</p>
+	</div>
+	<div class="full" hidden>
+	  <p>使用蛔蒿提取的山道年制成的驱虫药，在1950到1970年代被用于大规模驱虫。因山道年存在损害中枢神经系统等毒副作用，1982年被卫生部发文淘汰。</p>
+	  <p>1985年左右，蛔蒿在全国绝种，宝塔糖就此从大众视野中消失，成为历史。</p>
+	</div>
+  </div>
+
+  <!-- 11 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>健达出奇蛋（Kinder Surprise）</h3>
+	  <p>美国1997年起禁售，2022年全球召回</p>
+	</div>
+	<div class="full" hidden>
+	  <p>美国食品药品监督管理局因担心幼儿误食玩具造成窒息风险，自1997年起禁止其在美国销售。</p>
+	  <p>2022年，费列罗比利时阿尔隆工厂生产的特定批次因可能受沙门氏菌污染在全球被召回，比利时卫生当局下令该厂房暂时停产。</p>
+	  <p>此外，因夏季高温巧克力易融化，每年夏天都会从货架上撤下。</p>
+	</div>
+  </div>
+
+  <!-- 12 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>“没图没真相”</h3>
+	  <p>2009年起流行，现在已被“有图有真相”取代</p>
+	</div>
+	<div class="full" hidden>
+	  <p>2009年开始在网络论坛、社区流行，字面意思是“没有图片就不能了解真相”，常用于质疑对方“空口无凭”。</p>
+	  <p>衍生出“没图你说个○○”“无图无真相”“你倒是上个图啊”等多种变体。</p>
+	  <p>如今已很少使用，只在怀旧帖中偶尔出现。有网友评论：“现在有图都未必有真相了。”</p>
+	</div>
+  </div>
+
+  <!-- 13 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>“给亏吗”</h3>
+	  <p>早期台湾网络聊天室的搭讪用语</p>
+	</div>
+	<div class="full" hidden>
+	  <p>源自早期台湾网络聊天室和BBS，意思是“可以追你吗”，属于轻浮的搭讪说法。典型的聊天室开场是“安安、正妹、住哪、几岁、给亏吗”。</p>
+	  <p>因容易造成对方不适，后来逐渐被淘汰。有台湾网友表示，现在基本上已经没听人在用，如果拿出来讲会被说“你不土会死耶”。</p>
+	</div>
+  </div>
+
+  <!-- 14 -->
+  <div class="card">
+	<div class="pic"></div>
+	<div class="txt">
+	  <h3>“我被水桶了”</h3>
+	  <p>PTT世代标志性的“死语”</p>
+	</div>
+	<div class="full" hidden>
+	  <p>“水桶”是PTT论坛对“禁言”的戏称，“我被水桶了”意为账号因违反版规被暂时禁言。曾是PTT用户的高频用语，后来被网友列为“Z世代看不懂的死语”之一。</p>
+	  <p>PTT上至今仍有用户发帖称“水桶里好黑好可怕”“被桶50天不用大惊小怪”，但已属于老用户的怀旧用语。</p>
+	</div>
+  </div>
+
+</div>
+<footer>
+棍母小站
+</footer>
+<div class="mask" id="mask">
+  <div class="detail">
+	<button type="button" id="dClose">关闭</button>
+	<div class="d-pic" id="dPic"></div>
+	<h3 id="dTitle"></h3>
+	<div id="dBody"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const mask = document.getElementById('mask');
+  const dPic = document.getElementById('dPic');
+  const dTitle = document.getElementById('dTitle');
+  const dBody = document.getElementById('dBody');
+
+  document.querySelectorAll('.card').forEach(function (card) {
+	card.addEventListener('click', function () {
+	  const img = card.querySelector('.pic img');
+	  dPic.innerHTML = img ? img.outerHTML : '图片位置';
+
+	  dTitle.textContent = card.querySelector('.txt h3').textContent;
+
+	  const full = card.querySelector('.full');
+	  dBody.innerHTML = full ? full.innerHTML : '暂无详细信息';
+
+	  mask.classList.add('on');
+	  document.body.style.overflow = 'hidden'; 
+	});
+  });
+
+  function closeMask() {
+	mask.classList.remove('on');
+	document.body.style.overflow = '';
+  }
+
+  document.getElementById('dClose').addEventListener('click', closeMask);
+  mask.addEventListener('click', function (e) {
+	if (e.target === mask) closeMask(); 
+  });
+  document.addEventListener('keydown', function (e) {
+	if (e.key === 'Escape') closeMask();
+  });
+})();
+</script>
+<script>
+  var lo = document.getElementById('logout');
+  if (lo) lo.onclick = function (e) {
+	e.preventDefault();
+	localStorage.removeItem('gm_logged');
+	localStorage.removeItem('gm_login_time');
+	location.href = '登录.html';
+  };
+</script>
+</body>
+</html>
